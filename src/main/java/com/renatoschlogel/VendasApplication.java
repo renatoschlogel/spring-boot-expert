@@ -16,15 +16,19 @@ public class VendasApplication {
     @Qualifier("applicationName")
     private String applicationName;
 
+    @Vaca
+    private Animal animal;
+
     @Value("${application.name}")
     public String applicationNameProperties;
 
     @GetMapping("/oi")
     public String oi(){
-        return applicationNameProperties;
+        return animal.fazerBarulho();
     }
 
     public static void main(String[] args) {
+
         SpringApplication.run(VendasApplication.class, args);
     }
 }
