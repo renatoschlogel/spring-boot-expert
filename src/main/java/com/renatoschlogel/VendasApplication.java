@@ -27,29 +27,12 @@ public class VendasApplication {
             cliente2.setNome("Pedro");
             clienteRepository.save(cliente2);
 
-            System.out.println("Listando clientes inseridos");
-            List<Cliente> clientes = clienteRepository.findAll();
-            clientes.forEach(System.out::println);
+            System.out.println("existe cliente com o nome Renato "
+                    + clienteRepository.existsByNome("Renato"));
+            System.out.println("existe cliente com o nome Pedro "
+                    + clienteRepository.existsByNome("Pedrinho"));
 
-            clientes.forEach(c -> {
-                c.setNome(c.getNome().concat(" atualizado"));
-                clienteRepository.save(c);
-            });
 
-            System.out.println("Listando clientes atualizados");
-
-            clientes = clienteRepository.findAll();
-            clientes.forEach(System.out::println);
-
-            System.out.println("Buscando cliente renato");
-            clientes = clienteRepository.findByNomeLike("Ren");
-            clientes.forEach(System.out::println);
-
-            clientes.stream().findFirst().ifPresent(c -> clienteRepository.delete(c));
-
-            System.out.println("Listando clientes restantes");
-            clientes = clienteRepository.findAll();
-            clientes.forEach(System.out::println);
 
         };
     }
