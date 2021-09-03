@@ -21,34 +21,34 @@ public class VendasApplication {
 
             Cliente cliente = new Cliente();
             cliente.setNome("Renato");
-            clienteRepository.salvar(cliente);
+            clienteRepository.save(cliente);
 
             Cliente cliente2 = new Cliente();
             cliente2.setNome("Pedro");
-            clienteRepository.salvar(cliente2);
+            clienteRepository.save(cliente2);
 
             System.out.println("Listando clientes inseridos");
-            List<Cliente> clientes = clienteRepository.obterTodos();
+            List<Cliente> clientes = clienteRepository.findAll();
             clientes.forEach(System.out::println);
 
             clientes.forEach(c -> {
                 c.setNome(c.getNome().concat(" atualizado"));
-                clienteRepository.atualizar(c);
+                clienteRepository.save(c);
             });
 
             System.out.println("Listando clientes atualizados");
 
-            clientes = clienteRepository.obterTodos();
+            clientes = clienteRepository.findAll();
             clientes.forEach(System.out::println);
 
             System.out.println("Buscando cliente renato");
-            clientes = clienteRepository.buscarPorNome("Ren");
+            clientes = clienteRepository.findByNomeLike("Ren");
             clientes.forEach(System.out::println);
 
-            clientes.stream().findFirst().ifPresent(c -> clienteRepository.deletar(c));
+            clientes.stream().findFirst().ifPresent(c -> clienteRepository.delete(c));
 
             System.out.println("Listando clientes restantes");
-            clientes = clienteRepository.obterTodos();
+            clientes = clienteRepository.findAll();
             clientes.forEach(System.out::println);
 
         };
