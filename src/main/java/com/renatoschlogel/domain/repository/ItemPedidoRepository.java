@@ -1,4 +1,4 @@
-package com.renatoschlogel.domain.entity.domain.repository;
+package com.renatoschlogel.domain.repository;
 
 import com.renatoschlogel.domain.entity.ItemPedido;
 import org.springframework.data.jpa.repository.JpaRepository;
