@@ -20,5 +20,5 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
     List<Cliente> encontrarPorNomeNativeQuery(@Param("nome") String nome);
 
     boolean existsByNome(String nome);
-    
+
 }
