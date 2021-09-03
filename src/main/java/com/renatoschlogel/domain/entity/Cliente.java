@@ -1,9 +1,7 @@
 package com.renatoschlogel.domain.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Cliente {
@@ -13,6 +11,9 @@ public class Cliente {
     private Integer id;
 
     private String nome;
+
+    @OneToMany(mappedBy = "cliente")
+    private Set<Pedido> pedidos;
 
     public Cliente() {
     }
@@ -40,6 +41,14 @@ public class Cliente {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public Set<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(Set<Pedido> pedidos) {
+        this.pedidos = pedidos;
     }
 
     @Override
