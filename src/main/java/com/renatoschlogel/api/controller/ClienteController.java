@@ -3,6 +3,8 @@ package com.renatoschlogel.api.controller;
 import com.renatoschlogel.domain.entity.Cliente;
 import com.renatoschlogel.domain.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -59,4 +61,15 @@ public class ClienteController {
         }).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @GetMapping
+    @ResponseBody
+    public ResponseEntity find(Cliente filtro) {
+
+        ExampleMatcher matcher = ExampleMatcher.matching()
+                                               .withIgnoreCase()
+                                               .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+        Example example = Example.of(filtro, matcher);
+
+        return ResponseEntity.ok(clienteRepository.findAll(example));
+    }
 }
