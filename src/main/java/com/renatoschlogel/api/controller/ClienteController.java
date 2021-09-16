@@ -12,7 +12,6 @@ import java.util.Optional;
 @RequestMapping("/api/clientes")
 public class ClienteController {
 
-
     @Autowired
     private ClienteRepository clienteRepository;
 
@@ -43,8 +42,21 @@ public class ClienteController {
             return ResponseEntity.noContent().build();
         }
 
-
         return ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("/{id}")
+    @ResponseBody
+    public ResponseEntity update(@RequestBody Cliente cliente,
+                                 @PathVariable("id") Integer idCliente ) {
+
+        return clienteRepository
+                .findById(idCliente)
+                .map( clienteManager -> {
+                    cliente.setId(clienteManager.getId());
+                    clienteRepository.save(cliente);
+                    return ResponseEntity.noContent().build();
+        }).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
 }
