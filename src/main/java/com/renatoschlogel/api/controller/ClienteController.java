@@ -2,6 +2,7 @@ package com.renatoschlogel.api.controller;
 
 import com.renatoschlogel.domain.entity.Cliente;
 import com.renatoschlogel.domain.repository.ClienteRepository;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/clientes")
@@ -47,10 +49,9 @@ public class ClienteController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete (@PathVariable("id") Integer idCliente) {
-        clienteRepository
-                .findById(idCliente)
-                .ifPresentOrElse(cliente -> clienteRepository.delete(cliente),
-                                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado"));
+        Optional<Cliente> optCliente = clienteRepository.findById(idCliente);
+        optCliente.ifPresent( cliente -> clienteRepository.delete(cliente));
+        optCliente.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado"));
     }
 
     @PutMapping("/{id}")
