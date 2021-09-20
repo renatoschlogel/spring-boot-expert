@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/produtos")
@@ -18,6 +19,20 @@ public class ProdutoController {
     @Autowired
     private ProdutoRepository produtoRepository;
 
+    @GetMapping
+    public List<Produto> find(@RequestBody Produto filtro) {
+        ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreCase().withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+        Example<Produto> example = Example.of(filtro, matcher);
+        return produtoRepository.findAll(example);
+    }
+
+    @GetMapping("/{id}")
+    public Produto findById(@PathVariable("id") Integer idProduto) {
+        return produtoRepository
+                .findById(idProduto)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado!"));
+    }
+    
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Produto save(@RequestBody Produto produto) {
@@ -33,17 +48,15 @@ public class ProdutoController {
                 .map( produtoManager -> {
                     produto.setId(idProduto);
                     return produtoRepository.save(produto);
-                }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado"));
+                }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado!"));
     }
 
-
-    @GetMapping
-    public List<Produto> find(@RequestBody Produto filtro) {
-        ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreCase().withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
-        Example<Produto> example = Example.of(filtro, matcher);
-        return produtoRepository.findAll(example);
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable("id") Integer idProduto) {
+        Optional<Produto> optProduto = produtoRepository.findById(idProduto);
+        optProduto.ifPresent( produto -> produtoRepository.delete(produto));
+        optProduto.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado!"));
     }
-
-
 
 }
