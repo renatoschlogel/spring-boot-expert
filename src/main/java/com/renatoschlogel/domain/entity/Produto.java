@@ -1,11 +1,16 @@
 package com.renatoschlogel.domain.entity;
 
+import lombok.*;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.math.BigDecimal;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Produto {
 
@@ -17,27 +22,4 @@ public class Produto {
 
     private BigDecimal precoUnitatio;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public BigDecimal getPrecoUnitatio() {
-        return precoUnitatio;
-    }
-
-    public void setPrecoUnitatio(BigDecimal precoUnitatio) {
-        this.precoUnitatio = precoUnitatio;
-    }
 }
