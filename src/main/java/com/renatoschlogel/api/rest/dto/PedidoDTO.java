@@ -11,7 +11,7 @@ public class PedidoDTO {
 
     private BigDecimal valorTotal;
 
-    private List<ItemPedido> itens;
+    private List<ItemPedidoDTO> itens;
 
     public Integer getIdCliente() {
         return idCliente;
@@ -29,11 +29,11 @@ public class PedidoDTO {
         this.valorTotal = valorTotal;
     }
 
-    public List<ItemPedido> getItens() {
+    public List<ItemPedidoDTO> getItens() {
         return itens;
     }
 
-    public void setItens(List<ItemPedido> itens) {
+    public void setItens(List<ItemPedidoDTO> itens) {
         this.itens = itens;
     }
 }
