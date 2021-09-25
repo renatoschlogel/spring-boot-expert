@@ -1,10 +1,14 @@
 package com.renatoschlogel.api.rest.dto;
 
 import com.renatoschlogel.domain.entity.ItemPedido;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.List;
 
+@Getter
+@Setter
 public class PedidoDTO {
 
     private Integer idCliente;
@@ -13,27 +17,4 @@ public class PedidoDTO {
 
     private List<ItemPedidoDTO> itens;
 
-    public Integer getIdCliente() {
-        return idCliente;
-    }
-
-    public void setIdCliente(Integer idCliente) {
-        this.idCliente = idCliente;
-    }
-
-    public BigDecimal getValorTotal() {
-        return valorTotal;
-    }
-
-    public void setValorTotal(BigDecimal valorTotal) {
-        this.valorTotal = valorTotal;
-    }
-
-    public List<ItemPedidoDTO> getItens() {
-        return itens;
-    }
-
-    public void setItens(List<ItemPedidoDTO> itens) {
-        this.itens = itens;
-    }
 }
