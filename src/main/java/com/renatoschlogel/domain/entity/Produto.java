@@ -20,10 +20,10 @@ public class Produto {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @NotEmpty(message = "Campo descricao do produto é de preenchimento obrigatório.")
+    @NotEmpty(message = "{campo.descricao.obrigatorio}")
     private String descricao;
 
-    @NotNull(message = "O Preço unitário do produto é de preenchimento obrigatório.")
+    @NotNull(message = "{campo.preco.obrigatorio}")
     private BigDecimal precoUnitatio;
 
 }
