@@ -1,6 +1,7 @@
 package com.renatoschlogel.api.rest.dto;
 
 import com.renatoschlogel.domain.entity.ItemPedido;
+import com.renatoschlogel.validation.NotEmptyList;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,6 +19,7 @@ public class PedidoDTO {
     @NotNull(message = "É obrigatório informar o valor total do pedido")
     private BigDecimal valorTotal;
 
+    @NotEmptyList(message = "Pedido não pode ser realizado sem itens.")
     private List<ItemPedidoDTO> itens;
 
 }
