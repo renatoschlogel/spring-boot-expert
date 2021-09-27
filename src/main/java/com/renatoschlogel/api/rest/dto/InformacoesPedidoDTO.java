@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -22,6 +23,6 @@ public class InformacoesPedidoDTO {
     private String cpf;
     private String nomeCliente;
     private BigDecimal valorTotal;
-    private Set<InformacoesItemPedido> itens;
+    private List<InformacoesItemPedido> itens;
 
 }

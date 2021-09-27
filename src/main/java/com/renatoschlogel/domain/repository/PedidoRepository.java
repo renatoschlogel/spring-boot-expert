@@ -12,5 +12,5 @@ public interface PedidoRepository extends JpaRepository<Pedido, Integer> {
 
     List<Pedido> findByCliente(Cliente cliente);
 
-    Optional<Pedido> findFetchItemsById(Integer id);
+    Optional<Pedido> findFetchItensById(Integer id);
 }

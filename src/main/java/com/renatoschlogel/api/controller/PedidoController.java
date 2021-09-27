@@ -42,14 +42,15 @@ public class PedidoController {
                 .codigo(pedido.getId())
                 .data(pedido.getData().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
                 .cpf(pedido.getCliente().getCpf())
+                .nomeCliente(pedido.getCliente().getNome())
                 .valorTotal(pedido.getValorTotal())
                 .itens(converterItensParaDto(pedido.getItens()))
                 .build();
     }
 
-    private Set<InformacoesItemPedido> converterItensParaDto(Set<ItemPedido> itens) {
+    private List<InformacoesItemPedido> converterItensParaDto(List<ItemPedido> itens) {
         if(CollectionUtils.isEmpty(itens)){
-            return new HashSet<>();
+            return Collections.emptyList();
         }
 
         return itens.stream()
@@ -59,6 +60,6 @@ public class PedidoController {
                             .quantidade(item.getQuantidade())
                             .precoUnitatio(item.getProduto().getPrecoUnitatio())
                             .build()
-                    ).collect(Collectors.toSet());
+                    ).collect(Collectors.toList());
     }
 }

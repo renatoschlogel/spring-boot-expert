@@ -13,7 +13,6 @@ import com.renatoschlogel.domain.repository.ProdutoRepository;
 import com.renatoschlogel.exception.RegraNegocioException;
 import com.renatoschlogel.service.PedidoService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,9 +51,8 @@ public class PedidoServiceImpl implements PedidoService {
     }
 
     @Override
-    public Optional<Pedido> obterPedidoCompleto(Integer id) {
-       // return pedidoRepository.findByIdFetchItens(id);
-        return Optional.empty();
+    public Optional<Pedido> obterPedidoCompleto(Integer idPedido) {
+        return pedidoRepository.findFetchItensById(idPedido);
     }
 
     private List<ItemPedido> convertItens(Pedido pedido, List<ItemPedidoDTO> itensPedidoDTO) {
