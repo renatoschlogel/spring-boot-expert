@@ -1,5 +1,6 @@
 package com.renatoschlogel.domain.entity;
 
+import com.renatoschlogel.domain.enuns.StatusPedido;
 import lombok.*;
 
 import javax.persistence.*;
@@ -25,6 +26,9 @@ public class Pedido {
 
     @Column(precision = 20, scale = 2)
     private BigDecimal valorTotal;
+
+    @Enumerated(EnumType.STRING)
+    private StatusPedido status;
 
     @OneToMany(mappedBy = "pedido")
     private List<ItemPedido> itens;

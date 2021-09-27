@@ -23,6 +23,7 @@ public class InformacoesPedidoDTO {
     private String cpf;
     private String nomeCliente;
     private BigDecimal valorTotal;
+    private String status;
     private List<InformacoesItemPedido> itens;
 
 }

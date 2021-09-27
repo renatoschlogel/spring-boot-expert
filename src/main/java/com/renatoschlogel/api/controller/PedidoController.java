@@ -1,27 +1,31 @@
 package com.renatoschlogel.api.controller;
 
+import com.renatoschlogel.api.rest.dto.AtualizacaoStatusPedidoDTO;
 import com.renatoschlogel.api.rest.dto.InformacoesItemPedido;
 import com.renatoschlogel.api.rest.dto.InformacoesPedidoDTO;
 import com.renatoschlogel.api.rest.dto.PedidoDTO;
 import com.renatoschlogel.domain.entity.ItemPedido;
 import com.renatoschlogel.domain.entity.Pedido;
+import com.renatoschlogel.domain.enuns.StatusPedido;
+import com.renatoschlogel.exception.RegistroNaoEncontrado;
 import com.renatoschlogel.exception.RegraNegocioException;
 import com.renatoschlogel.service.PedidoService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/pedidos")
 public class PedidoController {
 
-    @Autowired
-    private PedidoService pedidoService;
+    private final PedidoService pedidoService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -32,8 +36,16 @@ public class PedidoController {
     @GetMapping("/{id}")
     public InformacoesPedidoDTO getById(@PathVariable("id") Integer idPedido){
         return pedidoService.obterPedidoCompleto(idPedido)
-                .map(pedido -> converterParaDTO(pedido))
-                .orElseThrow(() -> new RegraNegocioException("Pedido não encontrado!"));
+                .map(this::converterParaDTO)
+                .orElseThrow(() -> new RegistroNaoEncontrado("Pedido não encontrado!"));
+    }
+
+    @PatchMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updadeStatus(@PathVariable("id") Integer idPedido,
+                             @RequestBody AtualizacaoStatusPedidoDTO dto) {
+        pedidoService.atualizaStatus(idPedido, StatusPedido.valueOf(dto.getStatus()));
+
     }
 
     private InformacoesPedidoDTO converterParaDTO(Pedido pedido) {
@@ -45,6 +57,7 @@ public class PedidoController {
                 .nomeCliente(pedido.getCliente().getNome())
                 .valorTotal(pedido.getValorTotal())
                 .itens(converterItensParaDto(pedido.getItens()))
+                .status(pedido.getStatus().name())
                 .build();
     }
 

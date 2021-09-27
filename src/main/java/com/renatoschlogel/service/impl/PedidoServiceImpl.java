@@ -6,6 +6,7 @@ import com.renatoschlogel.domain.entity.Cliente;
 import com.renatoschlogel.domain.entity.ItemPedido;
 import com.renatoschlogel.domain.entity.Pedido;
 import com.renatoschlogel.domain.entity.Produto;
+import com.renatoschlogel.domain.enuns.StatusPedido;
 import com.renatoschlogel.domain.repository.ClienteRepository;
 import com.renatoschlogel.domain.repository.ItemPedidoRepository;
 import com.renatoschlogel.domain.repository.PedidoRepository;
@@ -37,6 +38,7 @@ public class PedidoServiceImpl implements PedidoService {
         Pedido pedido = new Pedido();
         pedido.setValorTotal(pedidoDTO.getValorTotal());
         pedido.setData(LocalDate.now());
+        pedido.setStatus(StatusPedido.REALIZADO);
 
         Cliente cliente = clienteRepository.findById(pedidoDTO.getIdCliente())
                 .orElseThrow(() -> new RegraNegocioException("Cliente não encontrado!"));
@@ -53,6 +55,17 @@ public class PedidoServiceImpl implements PedidoService {
     @Override
     public Optional<Pedido> obterPedidoCompleto(Integer idPedido) {
         return pedidoRepository.findFetchItensById(idPedido);
+    }
+
+    @Override
+    @Transactional
+    public void atualizaStatus(Integer idPedido, StatusPedido status) {
+        pedidoRepository.findById(idPedido)
+                .map( pedido -> {
+                    pedido.setStatus(status);
+                    return pedidoRepository.save(pedido);
+                })
+                .orElseThrow(() -> new RegraNegocioException("Pedido Não Encontrado!"));
     }
 
     private List<ItemPedido> convertItens(Pedido pedido, List<ItemPedidoDTO> itensPedidoDTO) {
