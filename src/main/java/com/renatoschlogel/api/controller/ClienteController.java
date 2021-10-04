@@ -2,6 +2,7 @@ package com.renatoschlogel.api.controller;
 
 import com.renatoschlogel.domain.entity.Cliente;
 import com.renatoschlogel.domain.repository.ClienteRepository;
+import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@Api("API Clientes")
 @RequestMapping("/api/clientes")
 public class ClienteController {
 
@@ -23,7 +25,12 @@ public class ClienteController {
     private ClienteRepository clienteRepository;
 
     @GetMapping("/{id}")
-    public Cliente getClienteById (@PathVariable("id") Integer idCliente) {
+    @ApiOperation("obter detalhes do cliente")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Cliente encontradao.  "),
+            @ApiResponse(code = 404, message = "Cliente não encontrado.")
+    })
+    public Cliente getClienteById (@PathVariable("id") @ApiParam("Id do clientes") Integer idCliente) {
         return clienteRepository
                 .findById(idCliente)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado"));
