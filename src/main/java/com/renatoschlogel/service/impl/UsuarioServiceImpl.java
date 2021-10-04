@@ -32,7 +32,7 @@ public class UsuarioServiceImpl implements UserDetailsService {
     private UserDetails prepararUserDetails(Usuario usuario) {
 
         String[] roles = new String[]{"USER"};
-        if (usuario.isAdmin()) {
+        if (usuario.getAdmin()) {
             roles = new String[]{"USER", "ADMIN"};
         }
 
