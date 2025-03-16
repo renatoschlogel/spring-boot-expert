@@ -1,4 +1,4 @@
-# Reposotorio do curso:  Spring Boot Expert: JPA, REST, JWT, OAuth2 com Docker e AWS
+# Repositório do curso: Spring Boot Expert: JPA, REST, JWT, OAuth2 com Docker e AWS
 
 link: https://www.udemy.com/course/spring-boot-expert
 
