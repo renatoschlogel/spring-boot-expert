@@ -2,9 +2,8 @@
 
 link: https://www.udemy.com/course/spring-boot-expert
 
-Em 2021, já fiz o curso, porém avaliando hoje, vi que já existe uma nova versão então hoje 16/03/2025, estou inciando o estudos/revisão desta nova versão.
+Em 2021, concluí este curso. No entanto, ao reavaliá-lo hoje (16/03/2025), percebi que há uma nova versão disponível. Por isso, estou iniciando meus estudos e a revisão com base nessa atualização.
 
-Para não perder o codigo fonte do da versão anterior do curso, foi criada a brach spring_boot_expert_legado.
+Para preservar o código-fonte da versão anterior do curso, foi criada a branch spring_boot_expert_legado.
 
-O estudos da nova versão do curso serão organizador aqui na branch master.
-
+Os estudos da nova versão do curso serão organizados na branch master.
